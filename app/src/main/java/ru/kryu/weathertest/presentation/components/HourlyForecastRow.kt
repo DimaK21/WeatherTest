@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -61,7 +62,9 @@ private fun HourlyForecastItem(
         )
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier
+                .padding(12.dp)
+                .width(80.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -86,12 +89,18 @@ private fun HourlyForecastItem(
                 fontWeight = FontWeight.Bold
             )
 
+            Spacer(modifier = Modifier.height(4.dp))
+
             if (hour.chanceOfRain > 0) {
-                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "${hour.chanceOfRain}%",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary
+                )
+            } else {
+                Text(
+                    text = "",
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }
