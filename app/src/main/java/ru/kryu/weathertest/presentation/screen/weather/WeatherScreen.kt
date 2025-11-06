@@ -1,6 +1,7 @@
 package ru.kryu.weathertest.presentation.screen.weather
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,8 +9,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,8 +21,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import ru.kryu.weathertest.R
 import org.koin.androidx.compose.koinViewModel
 import ru.kryu.weathertest.presentation.components.CurrentWeatherCard
 import ru.kryu.weathertest.presentation.components.DailyForecastCard
@@ -33,7 +40,7 @@ fun WeatherScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var showErrorDialog by remember { mutableStateOf(false) }
+    var dialogDismissed by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier.fillMaxSize()
@@ -43,6 +50,7 @@ fun WeatherScreen(
                 LoadingIndicator(
                     modifier = Modifier.padding(paddingValues)
                 )
+                dialogDismissed = false
             }
 
             is WeatherUiState.Success -> {
@@ -58,24 +66,29 @@ fun WeatherScreen(
                         modifier = Modifier.fillMaxSize()
                     )
                 }
+                dialogDismissed = false
             }
 
             is WeatherUiState.Error -> {
-                showErrorDialog = true
-            }
-        }
+                ErrorContent(
+                    onRetry = { viewModel.retry() },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                )
 
-        if (showErrorDialog && uiState is WeatherUiState.Error) {
-            ErrorDialog(
-                message = (uiState as WeatherUiState.Error).message,
-                onDismiss = {
-                    showErrorDialog = false
-                },
-                onRetry = {
-                    showErrorDialog = false
-                    viewModel.retry()
+                if (!dialogDismissed) {
+                    ErrorDialog(
+                        message = state.message,
+                        onDismiss = {
+                            dialogDismissed = true
+                        },
+                        onRetry = {
+                            viewModel.retry()
+                        }
+                    )
                 }
-            )
+            }
         }
     }
 }
@@ -113,5 +126,34 @@ private fun WeatherContent(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+
+@Composable
+private fun ErrorContent(
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(24.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.error_dialog_title),
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.error
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(onClick = onRetry) {
+                Text(text = stringResource(R.string.error_dialog_retry))
+            }
+        }
     }
 }
