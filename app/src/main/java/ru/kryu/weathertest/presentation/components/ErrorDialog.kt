@@ -26,11 +26,6 @@ fun ErrorDialog(
                 Text("Повторить")
             }
         },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Отмена")
-            }
-        },
         modifier = modifier
     )
 }
