@@ -6,7 +6,9 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import ru.kryu.weathertest.di.dataModule
+import ru.kryu.weathertest.di.domainModule
 import ru.kryu.weathertest.di.networkModule
+import ru.kryu.weathertest.di.presentationModule
 
 class WeatherApp : Application() {
 
@@ -18,7 +20,9 @@ class WeatherApp : Application() {
             androidContext(this@WeatherApp)
             modules(
                 networkModule,
-                dataModule
+                dataModule,
+                domainModule,
+                presentationModule
             )
         }
     }
