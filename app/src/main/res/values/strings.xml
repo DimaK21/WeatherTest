@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Weather Test</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_retry">Retry</string>
+    <string name="hourly_forecast_title">Hourly Forecast</string>
+    <string name="daily_forecast_title">3-Day Forecast</string>
+    <string name="feels_like">Feels like %1$d°</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="pressure">Pressure</string>
+    <string name="humidity_value">%1$d%%</string>
+    <string name="wind_value">%1$d km/h</string>
+    <string name="pressure_value">%1$d mbar</string>
+    <string name="rain_chance">Rain %1$d%%</string>
 </resources>

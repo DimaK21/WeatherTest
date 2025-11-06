@@ -21,10 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import ru.kryu.weathertest.R
 import ru.kryu.weathertest.domain.model.CurrentWeatherInfo
 import kotlin.math.roundToInt
 
@@ -86,7 +88,7 @@ fun CurrentWeatherCard(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "Ощущается как ${current.feelsLikeC.roundToInt()}°",
+                text = stringResource(R.string.feels_like, current.feelsLikeC.roundToInt()),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -101,36 +103,36 @@ fun CurrentWeatherCard(
                     icon = {
                         Icon(
                             imageVector = Icons.Default.WaterDrop,
-                            contentDescription = "Влажность",
+                            contentDescription = stringResource(R.string.humidity),
                             modifier = Modifier.size(20.dp)
                         )
                     },
-                    label = "Влажность",
-                    value = "${current.humidity}%"
+                    label = stringResource(R.string.humidity),
+                    value = stringResource(R.string.humidity_value, current.humidity)
                 )
 
                 WeatherParameter(
                     icon = {
                         Icon(
                             imageVector = Icons.Default.Air,
-                            contentDescription = "Ветер",
+                            contentDescription = stringResource(R.string.wind),
                             modifier = Modifier.size(20.dp)
                         )
                     },
-                    label = "Ветер",
-                    value = "${current.windKph.roundToInt()} км/ч"
+                    label = stringResource(R.string.wind),
+                    value = stringResource(R.string.wind_value, current.windKph.roundToInt())
                 )
 
                 WeatherParameter(
                     icon = {
                         Icon(
                             imageVector = Icons.Default.Compress,
-                            contentDescription = "Давление",
+                            contentDescription = stringResource(R.string.pressure),
                             modifier = Modifier.size(20.dp)
                         )
                     },
-                    label = "Давление",
-                    value = "${current.pressureMb.roundToInt()} мбар"
+                    label = stringResource(R.string.pressure),
+                    value = stringResource(R.string.pressure_value, current.pressureMb.roundToInt())
                 )
             }
         }

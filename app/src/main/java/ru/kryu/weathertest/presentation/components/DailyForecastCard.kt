@@ -16,9 +16,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import ru.kryu.weathertest.R
 import ru.kryu.weathertest.domain.model.DailyWeatherInfo
 import kotlin.math.roundToInt
 
@@ -29,7 +31,7 @@ fun DailyForecastCard(
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
-            text = "Прогноз на 3 дня",
+            text = stringResource(R.string.daily_forecast_title),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Medium,
             modifier = Modifier.padding(horizontal = 16.dp)
@@ -91,7 +93,7 @@ private fun DailyForecastItem(
                     )
                     if (day.chanceOfRain > 0) {
                         Text(
-                            text = "Дождь ${day.chanceOfRain}%",
+                            text = stringResource(R.string.rain_chance, day.chanceOfRain),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.primary
                         )

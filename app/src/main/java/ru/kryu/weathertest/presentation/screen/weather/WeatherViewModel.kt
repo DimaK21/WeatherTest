@@ -29,7 +29,7 @@ class WeatherViewModel(
                 }
                 .onFailure { throwable ->
                     _uiState.value = WeatherUiState.Error(
-                        message = throwable.message ?: "Неизвестная ошибка"
+                        message = throwable.message ?: "Unknown error"
                     )
                 }
         }
